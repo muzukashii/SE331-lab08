@@ -7,18 +7,21 @@ productMainController.controller('addProductController', ['$scope', '$http', '$l
         $scope.product = {};
         $scope.addPerson = true;
         $scope.editPerson = false;
-        $scope.addProduct = function () {
-
-            //$http.post("/product", $scope.product).success(function () {
-            productService.save($scope.product,function(){
-                $rootScope.addSuccess = true;
+            $scope.addProduct = function (flowFiles) {
+                productService.save($scope.product,function (data) {
+                    //after adding the object, add a new picture
+                    //get the product id which the image will be added
+                    var productid=data.id;
+                    //set location
+                    flowFiles.opts.target='http://localhost:8080/productImage/add';
+                    flowFiles.opts.testChunks = false;
+                    flowFiles.opts.query = {productid:productid};
+                    flowFiles.upload();
+        });
+                $rootScope.addSuccess=true;
                 $location.path("listProduct");
 
-            });
-        };
-
-
-    }]);
+            }}]);
 
 productMainController.controller('listProductController', ['$scope', '$http', '$rootScope','productService','$route','totalCalService','queryProductService',
     function ($scope, $http, $rootScope,productService,$route,totalCalService,queryProductService) {
@@ -58,7 +61,7 @@ productMainController.controller('editProductController', ['$scope', '$http', '$
         $scope.addPerson = false;
         $scope.editPerson = true;
         var id = $routeParams.id;
-        $http.get("/product/" + id).success(function (data) {
+        $http.get("http://localhost:8080/product/" + id).success(function (data) {
             $scope.product = data;
         });
 
@@ -69,4 +72,5 @@ productMainController.controller('editProductController', ['$scope', '$http', '$
                 $location.path("listProduct");
             });
         }
+        
     }]);

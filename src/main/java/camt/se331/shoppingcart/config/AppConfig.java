@@ -4,6 +4,9 @@ package camt.se331.shoppingcart.config;
 import camt.se331.shoppingcart.common.SerializableResourceBundleMessageSource;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.multipart.MultipartResolver;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.*;
@@ -13,7 +16,7 @@ import org.springframework.web.servlet.view.JstlView;
 import org.springframework.web.servlet.view.UrlBasedViewResolver;
 
 import java.util.Locale;
-
+@CrossOrigin
 @EnableWebMvc
 @Configuration 
 @ComponentScan(basePackages = {"camt.se331.shoppingcart"})
@@ -66,6 +69,13 @@ public class AppConfig extends WebMvcConfigurerAdapter {
         LocaleChangeInterceptor localChangeInterceptor = new LocaleChangeInterceptor();
         localChangeInterceptor.setParamName("lang");
         return localChangeInterceptor;
+    }
+
+    @Bean
+    public MultipartResolver multipartResolver(){
+        CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
+        multipartResolver.setMaxUploadSize(100000);
+        return multipartResolver;
     }
 
 
