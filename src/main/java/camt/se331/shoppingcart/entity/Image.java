@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 /**
- * Created by Bitee on 3/29/2016.
+ * Created by raPhat on 3/29/16 AD.
  */
 @Entity
 public class Image {
@@ -16,19 +16,19 @@ public class Image {
     @Lob
     byte[] content;
     String contentType;
+
     @Temporal(TemporalType.TIME)
     Date created;
 
     public Image() {
-
     }
 
-    public byte[] getContent() {
-        return content;
+    public Long getId() {
+        return id;
     }
 
-    public String getContentType() {
-        return contentType;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getFileName() {
@@ -39,6 +39,22 @@ public class Image {
         this.fileName = fileName;
     }
 
+    public byte[] getContent() {
+        return content;
+    }
+
+    public void setContent(byte[] content) {
+        this.content = content;
+    }
+
+    public String getContentType() {
+        return contentType;
+    }
+
+    public void setContentType(String contentType) {
+        this.contentType = contentType;
+    }
+
     public Date getCreated() {
         return created;
     }
@@ -46,35 +62,4 @@ public class Image {
     public void setCreated(Date created) {
         this.created = created;
     }
-
-    public void setContentType(String contentType) {
-        this.contentType = contentType;
-    }
-
-    public void setContent(byte[] content) {
-        this.content = content;
-    }
-
-
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Image(String fileName) {
-        this.fileName = fileName;
-    }
-
-    public Image(byte[] content) {
-        this.content = content;
-    }
-
-    public Image(Date created) {
-        this.created = created;
-    }
-
 }

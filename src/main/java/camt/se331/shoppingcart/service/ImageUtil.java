@@ -1,6 +1,7 @@
 package camt.se331.shoppingcart.service;
 
 import camt.se331.shoppingcart.entity.Image;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -10,34 +11,35 @@ import java.nio.file.Files;
 import java.util.Calendar;
 
 /**
- * Created by Bitee on 3/29/2016.
+ * Created by raPhat on 3/29/16 AD.
  */
+@CrossOrigin
 public class ImageUtil {
     static ImageUtil imageUtil = null;
-    public static ImageUtil getInstance(){
-        if (imageUtil ==null){
-            imageUtil=new ImageUtil();
+    public static ImageUtil getInstance() {
+        if(imageUtil == null) {
+            imageUtil = new ImageUtil();
         }
         return imageUtil;
     }
-    public static Image getImage(String resourcePath){
+
+    public static Image getImage(String resourcePath) {
         Image image = new Image();
         ClassLoader classLoader = ImageUtil.getInstance().getClass().getClassLoader();
 
         File file = new File(classLoader.getResource(resourcePath).getFile());
-
         try {
             image.setFileName(file.getName());
             image.setContentType(Files.probeContentType(file.toPath()));
             FileInputStream fis = new FileInputStream(file);
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
             byte[] buf = new byte[1024];
-            for(int readNum; (readNum = fis.read(buf)) != -1;){
-                bos.write(buf,0,readNum);
+            for (int readNum; (readNum = fis.read(buf))!= -1;) {
+                bos.write(buf, 0, readNum);
             }
             image.setContent(bos.toByteArray());
             image.setCreated(Calendar.getInstance().getTime());
-        }catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
         return image;

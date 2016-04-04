@@ -51,9 +51,9 @@
             <td>{{product.description}}</td>
             <td class="text-right">{{product.netPrice | number}}</td>
             <td class="text-right">{{product.totalPrice | number}}</td>
-            <td>
+            <td class="text-center">
                 <div ng-repeat="image in product.images" class="text-center">
-                    <img ng-src="data:{{image.contentType}};base64,{{image.content}}" class="thumbnail">
+                    <img ng-src="data:{{image.contentType}};base64, {{image.content}}" class="thumbnail"/>
                 </div>
             </td>
             <td class="text-center"><a ng-href="#/editProduct/{{product.id}}"> <span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a></td>

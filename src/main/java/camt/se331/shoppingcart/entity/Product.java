@@ -21,17 +21,8 @@ public class Product implements Comparable{
     @OneToMany(fetch = FetchType.EAGER)
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
     Set<Image> images = new HashSet<>();
-public  Product(){}
-    public Product(Double totalPrice) {
-        this.totalPrice = totalPrice;
-    }
 
-    public Product(String name) {
-        this.name = name;
-    }
-
-    public Product(Set<Image> images) {
-        this.images = images;
+    public Product() {
     }
 
     public Set<Image> getImages() {
@@ -42,6 +33,15 @@ public  Product(){}
         this.images = images;
     }
 
+
+    public Product(long l,String name, String description, Double totalPrice, Image images) {
+        this.id = l;
+        this.name = name;
+        this.description = description;
+        this.totalPrice = totalPrice;
+        this.images.add(images);
+    }
+
     public Long getId() {
         return id;
     }
@@ -49,10 +49,6 @@ public  Product(){}
     public void setId(Long id) {
         this.id = id;
     }
-
-    public Product(long l, String s, String s1, double v, Image image){
-
-    };
 
     public Double getNetPrice(){
         return getTotalPrice()*(1-VatEntity.getInstance().getVat());
@@ -121,4 +117,6 @@ public  Product(){}
 
         return (int) (this.getId() - ((Product)o).getId());
     }
+
+
 }
